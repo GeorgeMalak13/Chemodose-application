@@ -1,0 +1,5 @@
+{
+  "name": "Chemodose",
+  "description": "A professional chemotherapy and drug dosage calculator with custom Excel-like formulas, image support, and drug management.",
+  "requestFramePermissions": []
+}
