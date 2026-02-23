@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import * as math from 'mathjs';
 import { Drug, CalculationResult, DrugType } from './types';
+import { Logo } from './components/Logo';
 
 export default function App() {
   const [drugs, setDrugs] = useState<Drug[]>([]);
@@ -230,16 +231,7 @@ export default function App() {
       <header className="sticky top-0 z-20 bg-white/80 backdrop-blur-md border-bottom border-black/5 px-6 py-4">
         <div className="max-w-2xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl overflow-hidden shadow-xl shadow-brand-red/20 flex items-center justify-center bg-white border-2 border-brand-red/10">
-              <img 
-                src="https://picsum.photos/seed/oncology-logo/200/200" 
-                alt="Chemodose Logo" 
-                className="w-full h-full object-cover"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).src = 'https://cdn-icons-png.flaticon.com/512/2864/2864357.png';
-                }}
-              />
-            </div>
+            <Logo className="w-12 h-12 drop-shadow-md" />
             <h1 className="text-xl font-semibold tracking-tight text-brand-blue">Chemodose</h1>
           </div>
           <div className="flex items-center gap-4">
