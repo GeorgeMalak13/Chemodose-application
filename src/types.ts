@@ -20,6 +20,13 @@ export interface CalculationResult {
   description?: string;
 }
 
+export interface DrugFormula {
+  label: string;
+  formula: string;
+  unit: string;
+  description?: string;
+}
+
 export interface Drug {
   id: string;
   name: string;
@@ -28,5 +35,6 @@ export interface Drug {
   description: string;
   imageUrl?: string;
   fields: DrugField[];
-  calculate: (inputs: Record<string, number>) => CalculationResult[];
+  formulas: DrugFormula[];
+  sort_order?: number;
 }

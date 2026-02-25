@@ -22,9 +22,10 @@ import {
 import * as math from 'mathjs';
 import { Drug, CalculationResult, DrugType } from './types';
 import { Logo } from './components/Logo';
+import { DEFAULT_DRUGS } from './data/defaultDrugs';
 
 export default function App() {
-  const [drugs, setDrugs] = useState<Drug[]>([]);
+  const [drugs, setDrugs] = useState<Drug[]>(DEFAULT_DRUGS);
   const [selectedDrugId, setSelectedDrugId] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [inputs, setInputs] = useState<Record<string, number>>({});
