@@ -236,20 +236,20 @@ export default function App() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="flex flex-col items-center gap-8"
         >
-          <div className="w-32 h-32 bg-white rounded-[2rem] shadow-2xl flex items-center justify-center p-4">
+          <div className="w-32 h-32 bg-white rounded-[2.5rem] shadow-2xl flex items-center justify-center p-6">
             <Logo className="w-full h-full" />
           </div>
           <div className="text-center space-y-2">
             <h1 className="text-4xl font-black text-white tracking-tighter">CHEMODOSE</h1>
-            <p className="text-brand-red font-bold tracking-[0.2em] text-sm uppercase">Precision Oncology</p>
+            <p className="text-brand-red font-bold tracking-[0.3em] text-xs uppercase opacity-90">Precision Oncology</p>
           </div>
           <div className="mt-12">
-            <div className="w-48 h-1 bg-white/10 rounded-full overflow-hidden">
+            <div className="w-48 h-1.5 bg-white/10 rounded-full overflow-hidden">
               <motion.div 
                 initial={{ x: "-100%" }}
                 animate={{ x: "100%" }}
-                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                className="w-full h-full bg-brand-red"
+                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                className="w-full h-full bg-brand-red shadow-[0_0_15px_rgba(148,27,30,0.5)]"
               />
             </div>
           </div>
@@ -260,38 +260,45 @@ export default function App() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#F5F5F5]">
-        <div className="animate-pulse flex flex-col items-center gap-4">
-          <Activity className="w-12 h-12 text-brand-red" />
-          <p className="text-gray-400 font-medium">Loading clinical data...</p>
+      <div className="min-h-screen flex items-center justify-center bg-[#F8FAFC]">
+        <div className="flex flex-col items-center gap-4">
+          <div className="relative">
+            <Activity className="w-12 h-12 text-brand-red animate-pulse" />
+            <div className="absolute inset-0 bg-brand-red/20 blur-xl rounded-full animate-pulse" />
+          </div>
+          <p className="text-slate-400 font-bold text-xs uppercase tracking-widest">Syncing Clinical Data</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#F5F5F5] text-[#1A1A1A] font-sans selection:bg-brand-red/10">
-      {/* Header */}
-      <header className="sticky top-0 z-20 bg-white/80 backdrop-blur-md border-bottom border-black/5 px-6 py-4">
-        <div className="max-w-2xl mx-auto flex items-center justify-between">
+    <div className="fixed inset-0 bg-[#F8FAFC] text-slate-900 font-sans selection:bg-brand-red/10 overflow-hidden flex flex-col">
+      {/* Header - Native Style */}
+      <header className="flex-none bg-white border-b border-slate-100 px-6 py-4 safe-top">
+        <div className="max-w-xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Logo className="w-12 h-12 drop-shadow-md" />
-            <h1 className="text-xl font-semibold tracking-tight text-brand-blue">Chemodose</h1>
+            <div className="w-10 h-10 bg-brand-blue/5 rounded-xl flex items-center justify-center">
+              <Logo className="w-7 h-7" />
+            </div>
+            <div>
+              <h1 className="text-lg font-bold tracking-tight text-brand-blue leading-none">Chemodose</h1>
+              <p className="text-[10px] font-bold text-brand-red uppercase tracking-wider mt-0.5">Mobile v1.0</p>
+            </div>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
             <button 
               onClick={() => setIsAdmin(!isAdmin)}
-              className={`p-2 rounded-lg transition-colors ${isAdmin ? 'bg-brand-red/10 text-brand-red' : 'text-gray-400 hover:bg-gray-100'}`}
-              title="Admin Panel"
+              className={`p-2.5 rounded-xl transition-all active:scale-90 ${isAdmin ? 'bg-brand-red text-white shadow-lg shadow-brand-red/20' : 'bg-slate-50 text-slate-400 hover:text-brand-blue'}`}
             >
               <Settings className="w-5 h-5" />
             </button>
-            {selectedDrugId && (
+            {selectedDrugId && !isAdmin && (
               <button 
                 onClick={() => setSelectedDrugId(null)}
-                className="flex items-center gap-3 text-xl font-black text-brand-red hover:text-brand-red/80 transition-all bg-brand-red/10 px-6 py-3 rounded-3xl shadow-sm active:scale-95"
+                className="flex items-center gap-2 text-sm font-black text-brand-red bg-brand-red/5 px-4 py-2.5 rounded-xl active:scale-95 transition-all"
               >
-                <ChevronLeft className="w-8 h-8 stroke-[3]" />
+                <ChevronLeft className="w-5 h-5 stroke-[3]" />
                 BACK
               </button>
             )}
@@ -299,407 +306,405 @@ export default function App() {
         </div>
       </header>
 
-      <main className="max-w-2xl mx-auto p-6 pb-24">
-        <AnimatePresence mode="wait">
-          {isAdmin ? (
-            <motion.div
-              key="admin"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="space-y-6"
-            >
-              <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-bold">Drug Management</h2>
-                <div className="flex gap-2">
-                  <label className="bg-white border border-black/5 text-gray-600 px-4 py-2 rounded-xl flex items-center gap-2 font-medium shadow-sm hover:bg-gray-50 transition-all cursor-pointer">
-                    <Upload className="w-4 h-4" /> Import
+      {/* Main Content Area - Scrollable */}
+      <main className="flex-1 overflow-y-auto overflow-x-hidden pb-32">
+        <div className="max-w-xl mx-auto p-6">
+          <AnimatePresence mode="wait">
+            {isAdmin ? (
+              <motion.div
+                key="admin"
+                initial={{ opacity: 0, scale: 0.98 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.98 }}
+                className="space-y-6"
+              >
+                <div className="flex items-center justify-between">
+                  <h2 className="text-xl font-bold text-brand-blue">Drug Registry</h2>
+                  <div className="flex gap-2">
+                    <button 
+                      onClick={() => setEditingDrug({
+                        id: '', name: '', category: '', description: '', type: 'ORAL',
+                        imageUrl: '',
+                        fields: [{ id: 'weight', label: 'Weight', unit: 'kg', defaultValue: 0 }],
+                        formulas: [{ label: 'Total Dose', formula: 'weight * 10', unit: 'mg' }],
+                        isNew: true
+                      })}
+                      className="bg-brand-blue text-white w-10 h-10 rounded-xl flex items-center justify-center shadow-lg shadow-brand-blue/20 active:scale-90 transition-all"
+                    >
+                      <Plus className="w-5 h-5" />
+                    </button>
+                  </div>
+                </div>
+
+                <div className="grid gap-3">
+                  {drugs.map((drug, index) => (
+                    <motion.div 
+                      key={drug.id}
+                      layout
+                      className="bg-white p-4 rounded-2xl border border-slate-100 flex items-center justify-between shadow-sm"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="flex flex-col gap-0.5">
+                          <button onClick={() => moveDrug(index, 'up')} className="p-1 text-slate-300 hover:text-brand-blue"><ArrowUp className="w-3.5 h-3.5" /></button>
+                          <button onClick={() => moveDrug(index, 'down')} className="p-1 text-slate-300 hover:text-brand-blue"><ArrowDown className="w-3.5 h-3.5" /></button>
+                        </div>
+                        <div className="w-10 h-10 rounded-lg bg-slate-50 flex items-center justify-center overflow-hidden border border-slate-100">
+                          {drug.imageUrl ? (
+                            <img src={drug.imageUrl} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                          ) : (
+                            <Droplets className="w-5 h-5 text-slate-300" />
+                          )}
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-sm text-brand-blue">{drug.name}</h4>
+                          <p className="text-[10px] text-slate-400 font-medium uppercase tracking-wider">{drug.type}</p>
+                        </div>
+                      </div>
+                      <div className="flex gap-1">
+                        <button onClick={() => duplicateDrug(drug)} className="p-2 text-slate-400 hover:text-blue-600"><Copy className="w-4 h-4" /></button>
+                        <button onClick={() => setEditingDrug(drug)} className="p-2 text-slate-400 hover:text-brand-red"><Settings className="w-4 h-4" /></button>
+                        <button onClick={() => deleteDrug(drug.id)} className="p-2 text-slate-400 hover:text-red-500"><Trash2 className="w-4 h-4" /></button>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+
+                <div className="flex gap-3 pt-4">
+                  <label className="flex-1 bg-white border border-slate-200 text-slate-600 p-4 rounded-2xl flex items-center justify-center gap-2 font-bold text-sm shadow-sm active:scale-95 transition-all cursor-pointer">
+                    <Upload className="w-4 h-4" /> IMPORT BACKUP
                     <input type="file" className="hidden" accept=".json" onChange={importData} />
                   </label>
                   <button 
                     onClick={exportData}
-                    className="bg-white border border-black/5 text-gray-600 px-4 py-2 rounded-xl flex items-center gap-2 font-medium shadow-sm hover:bg-gray-50 transition-all"
+                    className="flex-1 bg-white border border-slate-200 text-slate-600 p-4 rounded-2xl flex items-center justify-center gap-2 font-bold text-sm shadow-sm active:scale-95 transition-all"
                   >
-                    <Download className="w-4 h-4" /> Backup
-                  </button>
-                  <button 
-                    onClick={() => setEditingDrug({
-                      id: '', name: '', category: '', description: '', type: 'ORAL',
-                      imageUrl: '',
-                      fields: [{ id: 'weight', label: 'Weight', unit: 'kg', defaultValue: 0 }],
-                      formulas: [{ label: 'Total Dose', formula: 'weight * 10', unit: 'mg' }],
-                      isNew: true
-                    })}
-                    className="bg-brand-red text-white px-4 py-2 rounded-xl flex items-center gap-2 font-medium shadow-lg shadow-brand-red/20"
-                  >
-                    <Plus className="w-4 h-4" /> Add Drug
+                    <Download className="w-4 h-4" /> EXPORT BACKUP
                   </button>
                 </div>
-              </div>
+              </motion.div>
+            ) : !selectedDrugId ? (
+              <motion.div
+                key="home"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                className="space-y-6"
+              >
+                {/* Search - Native Style */}
+                <div className="relative group">
+                  <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-brand-red transition-colors" />
+                  <input 
+                    type="text"
+                    placeholder="Search clinical registry..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full bg-white border border-slate-100 rounded-2xl py-5 pl-14 pr-6 shadow-sm focus:outline-none focus:ring-4 focus:ring-brand-red/5 transition-all text-lg font-medium placeholder:text-slate-300"
+                  />
+                </div>
 
-              {editingDrug && (
-                <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm p-6 flex items-center justify-center overflow-y-auto">
-                  <div className="bg-white w-full max-w-2xl rounded-3xl p-8 shadow-2xl space-y-6 my-auto">
-                    <div className="flex justify-between items-center">
-                      <h3 className="text-xl font-bold">{editingDrug.isNew ? 'New Drug' : 'Edit Drug'}</h3>
-                      <button onClick={() => setEditingDrug(null)}><X className="w-6 h-6 text-gray-400" /></button>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="space-y-1">
-                        <label className="text-xs font-bold text-gray-400 uppercase">ID (slug)</label>
-                        <input 
-                          value={editingDrug.id}
-                          onChange={e => setEditingDrug({...editingDrug, id: e.target.value})}
-                          className="w-full bg-gray-50 border border-gray-100 rounded-xl p-3"
-                        />
-                      </div>
-                      <div className="space-y-1">
-                        <label className="text-xs font-bold text-gray-400 uppercase">Name</label>
-                        <input 
-                          value={editingDrug.name}
-                          onChange={e => setEditingDrug({...editingDrug, name: e.target.value})}
-                          className="w-full bg-gray-50 border border-gray-100 rounded-xl p-3"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="space-y-1">
-                        <label className="text-xs font-bold text-gray-400 uppercase">Category</label>
-                        <input 
-                          value={editingDrug.category}
-                          onChange={e => setEditingDrug({...editingDrug, category: e.target.value})}
-                          className="w-full bg-gray-50 border border-gray-100 rounded-xl p-3"
-                        />
-                      </div>
-                      <div className="space-y-1">
-                        <label className="text-xs font-bold text-gray-400 uppercase">Route</label>
-                        <select 
-                          value={editingDrug.type}
-                          onChange={e => setEditingDrug({...editingDrug, type: e.target.value})}
-                          className="w-full bg-gray-50 border border-gray-100 rounded-xl p-3"
-                        >
-                          {Object.values(DrugType).map(type => (
-                            <option key={type} value={type}>{type}</option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-
-                    <div className="space-y-1">
-                      <label className="text-xs font-bold text-gray-400 uppercase">Description</label>
-                      <textarea 
-                        value={editingDrug.description}
-                        onChange={e => setEditingDrug({...editingDrug, description: e.target.value})}
-                        className="w-full bg-gray-50 border border-gray-100 rounded-xl p-3 min-h-[80px]"
-                      />
-                    </div>
-
-                    <div className="space-y-1">
-                      <label className="text-xs font-bold text-gray-400 uppercase">Drug Photo</label>
-                      <div className="flex items-center gap-4">
-                        {editingDrug.imageUrl && (
-                          <img src={editingDrug.imageUrl} className="w-16 h-16 rounded-xl object-cover border" referrerPolicy="no-referrer" />
+                {/* Drug List */}
+                <div className="grid gap-4">
+                  {filteredDrugs.map((drug) => (
+                    <motion.button
+                      key={drug.id}
+                      whileTap={{ scale: 0.97 }}
+                      onClick={() => handleDrugSelect(drug)}
+                      className="w-full text-left bg-white rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-all overflow-hidden p-5 flex items-center gap-4 group"
+                    >
+                      <div className="w-16 h-16 rounded-2xl bg-slate-50 flex-shrink-0 border border-slate-100 overflow-hidden flex items-center justify-center">
+                        {drug.imageUrl ? (
+                          <img src={drug.imageUrl} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                        ) : (
+                          <Droplets className="w-8 h-8 text-slate-200" />
                         )}
-                        <label className="flex-1 cursor-pointer bg-gray-50 border-2 border-dashed border-gray-200 rounded-xl p-4 flex flex-col items-center justify-center hover:bg-gray-100 transition-all">
-                          <Upload className="w-5 h-5 text-gray-400 mb-1" />
-                          <span className="text-xs font-medium text-gray-500">Upload Photo</span>
-                          <input type="file" className="hidden" accept="image/*" onChange={handleImageUpload} />
-                        </label>
-                        <input 
-                          placeholder="Or paste URL"
-                          value={editingDrug.imageUrl || ''}
-                          onChange={e => setEditingDrug({...editingDrug, imageUrl: e.target.value})}
-                          className="flex-1 bg-gray-50 border border-gray-100 rounded-xl p-3 text-sm"
-                        />
                       </div>
-                    </div>
-
-                    <div className="space-y-4">
-                      <h4 className="font-bold text-sm border-b pb-2">Fields (Variables)</h4>
-                      {editingDrug.fields.map((f: any, i: number) => (
-                        <div key={i} className="flex gap-2 items-end">
-                          <div className="flex flex-col gap-1">
-                            <button onClick={() => setEditingDrug({...editingDrug, fields: moveItem(editingDrug.fields, i, 'up')})} className="p-1 hover:bg-gray-100 rounded"><ArrowUp className="w-3 h-3" /></button>
-                            <button onClick={() => setEditingDrug({...editingDrug, fields: moveItem(editingDrug.fields, i, 'down')})} className="p-1 hover:bg-gray-100 rounded"><ArrowDown className="w-3 h-3" /></button>
-                          </div>
-                          <div className="flex-1 grid grid-cols-4 gap-2">
-                            <div className="space-y-1">
-                              <label className="text-[10px] font-bold text-gray-400 uppercase">ID</label>
-                              <input value={f.id} onChange={e => {
-                                const fields = [...editingDrug.fields];
-                                fields[i].id = e.target.value;
-                                setEditingDrug({...editingDrug, fields});
-                              }} className="w-full bg-gray-50 border border-gray-100 rounded-xl p-2 text-sm" />
-                            </div>
-                            <div className="space-y-1">
-                              <label className="text-[10px] font-bold text-gray-400 uppercase">Label</label>
-                              <input value={f.label} onChange={e => {
-                                const fields = [...editingDrug.fields];
-                                fields[i].label = e.target.value;
-                                setEditingDrug({...editingDrug, fields});
-                              }} className="w-full bg-gray-50 border border-gray-100 rounded-xl p-2 text-sm" />
-                            </div>
-                            <div className="space-y-1">
-                              <label className="text-[10px] font-bold text-gray-400 uppercase">Unit</label>
-                              <input value={f.unit} onChange={e => {
-                                const fields = [...editingDrug.fields];
-                                fields[i].unit = e.target.value;
-                                setEditingDrug({...editingDrug, fields});
-                              }} className="w-full bg-gray-50 border border-gray-100 rounded-xl p-2 text-sm" />
-                            </div>
-                            <div className="space-y-1">
-                              <label className="text-[10px] font-bold text-gray-400 uppercase">Default</label>
-                              <input type="number" value={f.defaultValue || 0} onChange={e => {
-                                const fields = [...editingDrug.fields];
-                                fields[i].defaultValue = parseFloat(e.target.value) || 0;
-                                setEditingDrug({...editingDrug, fields});
-                              }} className="w-full bg-gray-50 border border-gray-100 rounded-xl p-2 text-sm" />
-                            </div>
-                          </div>
-                          <button onClick={() => {
-                            const fields = editingDrug.fields.filter((_: any, idx: number) => idx !== i);
-                            setEditingDrug({...editingDrug, fields});
-                          }} className="p-2 text-red-500"><Trash2 className="w-4 h-4" /></button>
-                        </div>
-                      ))}
-                      <button onClick={() => setEditingDrug({...editingDrug, fields: [...editingDrug.fields, {id: '', label: '', unit: '', defaultValue: 0}]})} className="text-xs font-bold text-brand-red">+ Add Field</button>
-                    </div>
-
-                    <div className="space-y-4">
-                      <h4 className="font-bold text-sm border-b pb-2">Formulas (Excel-like)</h4>
-                      {editingDrug.formulas.map((f: any, i: number) => (
-                        <div key={i} className="space-y-2 p-4 bg-gray-50 rounded-2xl relative">
-                          <div className="absolute right-2 top-2 flex gap-1">
-                            <button onClick={() => setEditingDrug({...editingDrug, formulas: moveItem(editingDrug.formulas, i, 'up')})} className="p-1 hover:bg-white rounded shadow-sm"><ArrowUp className="w-3 h-3" /></button>
-                            <button onClick={() => setEditingDrug({...editingDrug, formulas: moveItem(editingDrug.formulas, i, 'down')})} className="p-1 hover:bg-white rounded shadow-sm"><ArrowDown className="w-3 h-3" /></button>
-                            <button onClick={() => {
-                              const formulas = editingDrug.formulas.filter((_: any, idx: number) => idx !== i);
-                              setEditingDrug({...editingDrug, formulas});
-                            }} className="p-1 text-red-500 hover:bg-white rounded shadow-sm"><Trash2 className="w-3 h-3" /></button>
-                          </div>
-                          <div className="flex gap-2 pr-20">
-                            <input placeholder="Label" value={f.label} onChange={e => {
-                              const formulas = [...editingDrug.formulas];
-                              formulas[i].label = e.target.value;
-                              setEditingDrug({...editingDrug, formulas});
-                            }} className="flex-1 bg-white border border-gray-100 rounded-xl p-2 text-sm" />
-                            <input placeholder="Unit" value={f.unit} onChange={e => {
-                              const formulas = [...editingDrug.formulas];
-                              formulas[i].unit = e.target.value;
-                              setEditingDrug({...editingDrug, formulas});
-                            }} className="w-20 bg-white border border-gray-100 rounded-xl p-2 text-sm" />
-                          </div>
-                          <input placeholder="Formula (e.g. weight * 15)" value={f.formula} onChange={e => {
-                            const formulas = [...editingDrug.formulas];
-                            formulas[i].formula = e.target.value;
-                            setEditingDrug({...editingDrug, formulas});
-                          }} className="w-full bg-white border border-gray-100 rounded-xl p-2 text-sm font-mono" />
-                        </div>
-                      ))}
-                      <button onClick={() => setEditingDrug({...editingDrug, formulas: [...editingDrug.formulas, {label: '', formula: '', unit: ''}]})} className="text-xs font-bold text-brand-red">+ Add Formula</button>
-                    </div>
-
-                    <button onClick={saveDrug} className="w-full bg-brand-red text-white p-4 rounded-2xl font-bold flex items-center justify-center gap-2 shadow-xl shadow-brand-red/30">
-                      <Save className="w-5 h-5" /> Save Drug Definition
-                    </button>
-                  </div>
-                </div>
-              )}
-
-              <div className="grid gap-4">
-                {drugs.map((drug, index) => (
-                  <div key={drug.id} className="bg-white p-4 rounded-2xl border border-black/5 flex items-center justify-between group">
-                    <div className="flex items-center gap-4">
-                      <div className="flex flex-col gap-1 mr-2">
-                        <button onClick={() => moveDrug(index, 'up')} className="p-1 hover:bg-gray-100 rounded" title="Move Up"><ArrowUp className="w-4 h-4" /></button>
-                        <button onClick={() => moveDrug(index, 'down')} className="p-1 hover:bg-gray-100 rounded" title="Move Down"><ArrowDown className="w-4 h-4" /></button>
-                      </div>
-                      {drug.imageUrl && <img src={drug.imageUrl} className="w-10 h-10 rounded-lg object-cover border" referrerPolicy="no-referrer" />}
-                      <div>
-                        <h4 className="font-bold text-brand-blue">{drug.name}</h4>
-                        <p className="text-xs text-gray-400">{drug.category} • <span className="text-brand-red font-medium">{drug.type}</span></p>
-                      </div>
-                    </div>
-                    <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <button onClick={() => duplicateDrug(drug)} className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg" title="Duplicate"><Copy className="w-4 h-4" /></button>
-                      <button onClick={() => setEditingDrug(drug)} className="p-2 text-brand-red hover:bg-brand-red/5 rounded-lg" title="Edit"><Settings className="w-4 h-4" /></button>
-                      <button onClick={() => deleteDrug(drug.id)} className="p-2 text-red-500 hover:bg-red-50 rounded-lg" title="Delete"><Trash2 className="w-4 h-4" /></button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          ) : !selectedDrugId ? (
-            <motion.div
-              key="home"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="space-y-6"
-            >
-              {/* Search */}
-              <div className="relative">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input 
-                  type="text"
-                  placeholder="Search drugs or categories..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-white border border-black/5 rounded-2xl py-4 pl-12 pr-4 shadow-sm focus:outline-none focus:ring-2 focus:ring-brand-red/20 transition-all"
-                />
-              </div>
-
-              {/* Drug List */}
-              <div className="grid gap-4">
-                {filteredDrugs.map((drug) => (
-                  <button
-                    key={drug.id}
-                    onClick={() => handleDrugSelect(drug)}
-                    className="group w-full text-left bg-white rounded-2xl border border-black/5 shadow-sm hover:shadow-md hover:border-brand-red/20 transition-all overflow-hidden"
-                  >
-                    <div className="flex items-center p-4 gap-4">
-                      {drug.imageUrl && (
-                        <div className="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 border border-black/5">
-                          <img 
-                            src={drug.imageUrl} 
-                            alt={drug.name} 
-                            className="w-full h-full object-cover"
-                            referrerPolicy="no-referrer"
-                          />
-                        </div>
-                      )}
                       <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2">
-                          <span className="font-semibold text-lg truncate text-brand-blue">{drug.name}</span>
-                          <span className="text-[10px] uppercase tracking-wider font-bold px-2 py-0.5 rounded-full bg-brand-red/10 text-brand-red">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="font-bold text-lg text-brand-blue truncate">{drug.name}</span>
+                          <span className="text-[9px] font-black px-2 py-0.5 rounded-lg bg-brand-red/10 text-brand-red uppercase tracking-widest">
                             {drug.type}
                           </span>
                         </div>
-                        <p className="text-sm text-gray-500 truncate">{drug.category}</p>
+                        <p className="text-xs text-slate-400 font-medium truncate">{drug.category}</p>
                       </div>
+                      <ChevronLeft className="w-5 h-5 text-slate-300 rotate-180 group-hover:text-brand-red transition-colors" />
+                    </motion.button>
+                  ))}
+                </div>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="calc"
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -50 }}
+                className="space-y-8"
+              >
+                {/* Drug Info Header */}
+                <div className="bg-white p-6 rounded-[2.5rem] border border-slate-100 shadow-sm space-y-4">
+                  <div className="flex items-start justify-between">
+                    <div className="space-y-1">
+                      <h2 className="text-2xl font-black text-brand-blue tracking-tight">{selectedDrug.name}</h2>
                       <div className="flex items-center gap-2">
-                        {drug.imageUrl && (
-                          <button 
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              window.open(drug.imageUrl, '_blank');
-                            }}
-                            className="p-2 text-gray-400 hover:text-brand-red hover:bg-brand-red/5 rounded-lg transition-all"
-                            title="View Photo"
-                          >
-                            <Droplets className="w-5 h-5" />
-                          </button>
-                        )}
+                        <span className="text-brand-red font-bold text-[10px] uppercase tracking-widest bg-brand-red/5 px-2 py-1 rounded-lg">{selectedDrug.type}</span>
+                        <span className="text-slate-400 font-bold text-[10px] uppercase tracking-widest">{selectedDrug.category}</span>
                       </div>
                     </div>
-                  </button>
-                ))}
-                {filteredDrugs.length === 0 && (
-                  <div className="text-center py-12 text-gray-400">
-                    No drugs found matching your search.
+                    <div className="w-12 h-12 bg-brand-red/10 rounded-2xl flex items-center justify-center">
+                      <Activity className="w-6 h-6 text-brand-red" />
+                    </div>
                   </div>
-                )}
-              </div>
-            </motion.div>
-          ) : (
-            <motion.div
-              key="calc"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              className="space-y-8"
-            >
-              {/* Drug Info Card */}
-              <div className="bg-white p-6 rounded-3xl border border-black/5 shadow-sm space-y-3">
-                <div className="flex items-start justify-between">
-                  <div>
-                    <h2 className="text-2xl font-bold text-brand-blue">{selectedDrug.name}</h2>
-                    <p className="text-brand-red font-medium text-sm">{selectedDrug.category} • {selectedDrug.type}</p>
-                  </div>
-                  <div className="bg-brand-red/10 p-3 rounded-2xl">
-                    <Activity className="w-6 h-6 text-brand-red" />
-                  </div>
+                  {selectedDrug.description && (
+                    <p className="text-xs text-slate-500 leading-relaxed font-medium bg-slate-50 p-4 rounded-2xl">
+                      {selectedDrug.description}
+                    </p>
+                  )}
                 </div>
-                <p className="text-sm text-gray-600 leading-relaxed">
-                  {selectedDrug.description}
-                </p>
-              </div>
 
-              {/* Inputs Section */}
-              <div className="space-y-4">
-                <h3 className="text-xs font-bold uppercase tracking-widest text-gray-400 flex items-center gap-2">
-                  <Scale className="w-4 h-4" />
-                  Required Inputs
-                </h3>
-                <div className="grid gap-4">
-                  {selectedDrug.fields.map((field) => (
-                    <div key={field.id} className="bg-white p-4 rounded-2xl border border-black/5 shadow-sm flex items-center gap-4">
-                      <div className="flex-1">
-                        <label className="block text-xs font-semibold text-gray-500 mb-1">
-                          {field.label} ({field.unit})
+                {/* Inputs Section */}
+                <div className="space-y-4">
+                  <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 flex items-center gap-2 px-2">
+                    <Scale className="w-3.5 h-3.5" />
+                    Patient Parameters
+                  </h3>
+                  <div className="grid gap-3">
+                    {selectedDrug.fields.map((field) => (
+                      <div key={field.id} className="bg-white p-5 rounded-3xl border border-slate-100 shadow-sm focus-within:ring-4 focus-within:ring-brand-red/5 transition-all">
+                        <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">
+                          {field.label} <span className="text-brand-red">({field.unit})</span>
                         </label>
                         <input 
                           type="number"
                           inputMode="decimal"
-                          placeholder={field.placeholder || `Enter ${field.label.toLowerCase()}`}
+                          placeholder="0.00"
                           value={inputs[field.id] || ''}
                           onChange={(e) => handleInputChange(field.id, e.target.value)}
-                          className="w-full text-lg font-medium focus:outline-none placeholder:text-gray-300"
+                          className="w-full text-2xl font-bold text-brand-blue focus:outline-none placeholder:text-slate-100"
                         />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Results Section */}
+                <div className="space-y-4">
+                  <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 flex items-center gap-2 px-2">
+                    <Droplets className="w-3.5 h-3.5" />
+                    Dosing Calculations
+                  </h3>
+                  <div className="grid gap-4">
+                    {results.length > 0 ? (
+                      results.map((result, idx) => (
+                        <motion.div 
+                          key={idx}
+                          initial={{ opacity: 0, scale: 0.95 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ delay: idx * 0.05 }}
+                          className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm relative overflow-hidden group"
+                        >
+                          <div className="absolute top-0 left-0 w-1.5 h-full bg-brand-red" />
+                          <div className="flex justify-between items-end">
+                            <div className="space-y-2">
+                              <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{result.label}</p>
+                              <div className="flex items-baseline gap-1.5">
+                                <span className="text-4xl font-light tracking-tighter text-brand-blue">{result.value}</span>
+                                <span className="text-xs font-bold text-slate-400 uppercase">{result.unit}</span>
+                              </div>
+                            </div>
+                            {result.description && (
+                              <div className="flex items-center gap-1.5 text-[9px] font-bold text-brand-red bg-brand-red/5 px-3 py-1.5 rounded-xl">
+                                <Info className="w-3 h-3" />
+                                CLINICAL NOTE
+                              </div>
+                            )}
+                          </div>
+                        </motion.div>
+                      ))
+                    ) : (
+                      <div className="bg-slate-100/50 border-2 border-dashed border-slate-200 rounded-[2.5rem] p-12 text-center">
+                        <Calculator className="w-10 h-10 text-slate-300 mx-auto mb-3" />
+                        <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Awaiting Patient Weight</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </main>
+
+      {/* Admin Modal - Native Style */}
+      <AnimatePresence>
+        {editingDrug && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md p-6 flex items-end sm:items-center justify-center overflow-y-auto"
+          >
+            <motion.div 
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="bg-white w-full max-w-xl rounded-[2.5rem] p-8 shadow-2xl space-y-6 max-h-[90vh] overflow-y-auto"
+            >
+              <div className="flex justify-between items-center sticky top-0 bg-white pb-4 z-10">
+                <h3 className="text-xl font-black text-brand-blue tracking-tight">{editingDrug.isNew ? 'Register New Drug' : 'Update Protocol'}</h3>
+                <button onClick={() => setEditingDrug(null)} className="w-10 h-10 bg-slate-50 rounded-full flex items-center justify-center text-slate-400 hover:text-brand-red transition-colors">
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              <div className="space-y-6">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Protocol ID</label>
+                    <input 
+                      value={editingDrug.id}
+                      onChange={e => setEditingDrug({...editingDrug, id: e.target.value})}
+                      className="w-full bg-slate-50 border border-slate-100 rounded-2xl p-4 font-bold text-brand-blue focus:ring-2 focus:ring-brand-red/10 focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Drug Name</label>
+                    <input 
+                      value={editingDrug.name}
+                      onChange={e => setEditingDrug({...editingDrug, name: e.target.value})}
+                      className="w-full bg-slate-50 border border-slate-100 rounded-2xl p-4 font-bold text-brand-blue focus:ring-2 focus:ring-brand-red/10 focus:outline-none"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Category</label>
+                    <input 
+                      value={editingDrug.category}
+                      onChange={e => setEditingDrug({...editingDrug, category: e.target.value})}
+                      className="w-full bg-slate-50 border border-slate-100 rounded-2xl p-4 font-bold text-brand-blue focus:ring-2 focus:ring-brand-red/10 focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Route</label>
+                    <select 
+                      value={editingDrug.type}
+                      onChange={e => setEditingDrug({...editingDrug, type: e.target.value})}
+                      className="w-full bg-slate-50 border border-slate-100 rounded-2xl p-4 font-bold text-brand-blue focus:ring-2 focus:ring-brand-red/10 focus:outline-none appearance-none"
+                    >
+                      {Object.values(DrugType).map(type => (
+                        <option key={type} value={type}>{type}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Protocol Description</label>
+                  <textarea 
+                    value={editingDrug.description}
+                    onChange={e => setEditingDrug({...editingDrug, description: e.target.value})}
+                    className="w-full bg-slate-50 border border-slate-100 rounded-2xl p-4 font-medium text-slate-600 min-h-[100px] focus:ring-2 focus:ring-brand-red/10 focus:outline-none"
+                  />
+                </div>
+
+                <div className="space-y-4">
+                  <h4 className="text-xs font-black text-brand-blue uppercase tracking-widest border-b border-slate-100 pb-2">Input Parameters</h4>
+                  {editingDrug.fields.map((f: any, i: number) => (
+                    <div key={i} className="flex gap-3 items-end bg-slate-50 p-4 rounded-2xl">
+                      <div className="flex-1 grid grid-cols-4 gap-2">
+                        <div className="space-y-1">
+                          <label className="text-[8px] font-black text-slate-400 uppercase">Slug</label>
+                          <input value={f.id} onChange={e => {
+                            const fields = [...editingDrug.fields];
+                            fields[i].id = e.target.value;
+                            setEditingDrug({...editingDrug, fields});
+                          }} className="w-full bg-white border border-slate-200 rounded-xl p-2 text-xs font-bold" />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="text-[8px] font-black text-slate-400 uppercase">Label</label>
+                          <input value={f.label} onChange={e => {
+                            const fields = [...editingDrug.fields];
+                            fields[i].label = e.target.value;
+                            setEditingDrug({...editingDrug, fields});
+                          }} className="w-full bg-white border border-slate-200 rounded-xl p-2 text-xs font-bold" />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="text-[8px] font-black text-slate-400 uppercase">Unit</label>
+                          <input value={f.unit} onChange={e => {
+                            const fields = [...editingDrug.fields];
+                            fields[i].unit = e.target.value;
+                            setEditingDrug({...editingDrug, fields});
+                          }} className="w-full bg-white border border-slate-200 rounded-xl p-2 text-xs font-bold" />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="text-[8px] font-black text-slate-400 uppercase">Def.</label>
+                          <input type="number" value={f.defaultValue || 0} onChange={e => {
+                            const fields = [...editingDrug.fields];
+                            fields[i].defaultValue = parseFloat(e.target.value) || 0;
+                            setEditingDrug({...editingDrug, fields});
+                          }} className="w-full bg-white border border-slate-200 rounded-xl p-2 text-xs font-bold" />
+                        </div>
+                      </div>
+                      <button onClick={() => {
+                        const fields = editingDrug.fields.filter((_: any, idx: number) => idx !== i);
+                        setEditingDrug({...editingDrug, fields});
+                      }} className="p-2 text-slate-300 hover:text-red-500"><Trash2 className="w-4 h-4" /></button>
+                    </div>
+                  ))}
+                  <button onClick={() => setEditingDrug({...editingDrug, fields: [...editingDrug.fields, {id: '', label: '', unit: '', defaultValue: 0}]})} className="text-[10px] font-black text-brand-red uppercase tracking-widest">+ Add Parameter</button>
+                </div>
+
+                <div className="space-y-4">
+                  <h4 className="text-xs font-black text-brand-blue uppercase tracking-widest border-b border-slate-100 pb-2">Calculation Logic</h4>
+                  {editingDrug.formulas.map((f: any, i: number) => (
+                    <div key={i} className="space-y-3 p-5 bg-slate-50 rounded-[2rem] relative">
+                      <div className="absolute right-4 top-4 flex gap-2">
+                        <button onClick={() => {
+                          const formulas = editingDrug.formulas.filter((_: any, idx: number) => idx !== i);
+                          setEditingDrug({...editingDrug, formulas});
+                        }} className="p-2 text-slate-300 hover:text-red-500 bg-white rounded-xl shadow-sm"><Trash2 className="w-4 h-4" /></button>
+                      </div>
+                      <div className="flex gap-3 pr-12">
+                        <div className="flex-1 space-y-1">
+                          <label className="text-[8px] font-black text-slate-400 uppercase">Result Label</label>
+                          <input placeholder="e.g. Total Dose" value={f.label} onChange={e => {
+                            const formulas = [...editingDrug.formulas];
+                            formulas[i].label = e.target.value;
+                            setEditingDrug({...editingDrug, formulas});
+                          }} className="w-full bg-white border border-slate-200 rounded-xl p-3 text-xs font-bold" />
+                        </div>
+                        <div className="w-24 space-y-1">
+                          <label className="text-[8px] font-black text-slate-400 uppercase">Unit</label>
+                          <input placeholder="mg" value={f.unit} onChange={e => {
+                            const formulas = [...editingDrug.formulas];
+                            formulas[i].unit = e.target.value;
+                            setEditingDrug({...editingDrug, formulas});
+                          }} className="w-full bg-white border border-slate-200 rounded-xl p-3 text-xs font-bold" />
+                        </div>
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-[8px] font-black text-slate-400 uppercase">Math Formula (Excel Style)</label>
+                        <input placeholder="e.g. weight * 15" value={f.formula} onChange={e => {
+                          const formulas = [...editingDrug.formulas];
+                          formulas[i].formula = e.target.value;
+                          setEditingDrug({...editingDrug, formulas});
+                        }} className="w-full bg-white border border-slate-200 rounded-xl p-4 text-sm font-mono font-bold text-brand-red" />
                       </div>
                     </div>
                   ))}
+                  <button onClick={() => setEditingDrug({...editingDrug, formulas: [...editingDrug.formulas, {label: '', formula: '', unit: ''}]})} className="text-[10px] font-black text-brand-red uppercase tracking-widest">+ Add Calculation</button>
                 </div>
-              </div>
 
-              {/* Results Section */}
-              <div className="space-y-4">
-                <h3 className="text-xs font-bold uppercase tracking-widest text-gray-400 flex items-center gap-2">
-                  <Droplets className="w-4 h-4" />
-                  Calculated Results
-                </h3>
-                <div className="grid gap-4">
-                  {results.length > 0 ? (
-                    results.map((result, idx) => (
-                      <motion.div 
-                        key={idx}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: idx * 0.1 }}
-                        className="bg-white p-5 rounded-2xl border border-black/5 shadow-sm relative overflow-hidden group"
-                      >
-                        <div className="absolute top-0 left-0 w-1 h-full bg-brand-red opacity-0 group-hover:opacity-100 transition-opacity" />
-                        <div className="flex justify-between items-end">
-                          <div className="space-y-1">
-                            <p className="text-xs font-semibold text-gray-400 tracking-wider">{result.label}</p>
-                            <div className="flex items-baseline gap-1">
-                              <span className="text-3xl font-light tracking-tight text-brand-blue">{result.value}</span>
-                              <span className="text-sm font-medium text-gray-500">{result.unit}</span>
-                            </div>
-                          </div>
-                          {result.description && (
-                            <div className="flex items-center gap-1.5 text-[10px] font-medium text-gray-400 bg-gray-50 px-2 py-1 rounded-lg">
-                              <Info className="w-3 h-3 text-brand-red" />
-                              {result.description}
-                            </div>
-                          )}
-                        </div>
-                      </motion.div>
-                    ))
-                  ) : (
-                    <div className="bg-gray-100/50 border-2 border-dashed border-gray-200 rounded-2xl p-8 text-center">
-                      <Calculator className="w-8 h-8 text-gray-300 mx-auto mb-2" />
-                      <p className="text-sm text-gray-400">Enter weight to see calculations</p>
-                    </div>
-                  )}
-                </div>
+                <button onClick={saveDrug} className="w-full bg-brand-red text-white p-5 rounded-[2rem] font-black text-sm tracking-widest flex items-center justify-center gap-3 shadow-2xl shadow-brand-red/30 active:scale-95 transition-all">
+                  <Save className="w-5 h-5" /> COMMIT TO REGISTRY
+                </button>
               </div>
             </motion.div>
-          )}
-        </AnimatePresence>
-      </main>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
