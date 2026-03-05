@@ -411,16 +411,9 @@ export default function App() {
                       onClick={() => handleDrugSelect(drug)}
                       className="w-full text-left bg-white rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-all overflow-hidden p-5 flex items-center gap-4 group"
                     >
-                      <div className="w-16 h-16 rounded-2xl bg-slate-50 flex-shrink-0 border border-slate-100 overflow-hidden flex items-center justify-center">
-                        {drug.imageUrl ? (
-                          <img src={drug.imageUrl} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
-                        ) : (
-                          <Droplets className="w-8 h-8 text-slate-200" />
-                        )}
-                      </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
-                          <span className="font-bold text-lg text-brand-blue truncate">{drug.name}</span>
+                          <span className="font-bold text-2xl text-brand-blue truncate">{drug.name}</span>
                           <span className="text-[9px] font-black px-2 py-0.5 rounded-lg bg-brand-red/10 text-brand-red uppercase tracking-widest">
                             {drug.type}
                           </span>
@@ -449,9 +442,6 @@ export default function App() {
                         <span className="text-brand-red font-bold text-[10px] uppercase tracking-widest bg-brand-red/5 px-2 py-1 rounded-lg">{selectedDrug.type}</span>
                         <span className="text-slate-400 font-bold text-[10px] uppercase tracking-widest">{selectedDrug.category}</span>
                       </div>
-                    </div>
-                    <div className="w-12 h-12 bg-brand-red/10 rounded-2xl flex items-center justify-center">
-                      <Activity className="w-6 h-6 text-brand-red" />
                     </div>
                   </div>
                   {selectedDrug.description && (
