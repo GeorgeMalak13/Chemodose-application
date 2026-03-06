@@ -236,7 +236,7 @@ export default function App() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="flex flex-col items-center gap-8"
         >
-          <div className="w-64 h-64 flex items-center justify-center p-4">
+          <div className="w-80 h-80 flex items-center justify-center p-4">
             <Logo className="w-full h-full" variant="png" />
           </div>
           <div className="text-center space-y-4">
@@ -244,15 +244,12 @@ export default function App() {
               <h1 className="text-5xl font-black text-brand-blue tracking-tighter">CHEMODOSE</h1>
               <div className="flex items-center justify-center gap-3">
                 <div className="h-px w-8 bg-brand-red/30" />
-                <p className="text-brand-red font-bold tracking-[0.4em] text-[10px] uppercase opacity-90">Precision Oncology</p>
+                <p className="text-brand-red font-bold tracking-[0.4em] text-[10px] uppercase opacity-90">Chemotherapy dosing</p>
                 <div className="h-px w-8 bg-brand-red/30" />
               </div>
             </div>
-            <p className="text-slate-400 text-xs font-medium max-w-[200px] mx-auto leading-relaxed">
-              Clinical Compounding & Dosage Calculator for Oncology Professionals
-            </p>
           </div>
-          <div className="mt-12">
+          <div className="mt-12 flex flex-col items-center gap-8">
             <div className="w-48 h-1.5 bg-slate-100 rounded-full overflow-hidden">
               <motion.div 
                 initial={{ x: "-100%" }}
@@ -261,6 +258,9 @@ export default function App() {
                 className="w-full h-full bg-brand-red shadow-[0_0_15px_rgba(148,27,30,0.3)]"
               />
             </div>
+            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em] opacity-60">
+              © George Malak
+            </p>
           </div>
         </motion.div>
       </motion.div>
