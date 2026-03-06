@@ -228,7 +228,7 @@ export default function App() {
       <motion.div 
         initial={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-brand-blue"
+        className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-white"
       >
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
@@ -236,20 +236,29 @@ export default function App() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="flex flex-col items-center gap-8"
         >
-          <div className="w-32 h-32 bg-white rounded-[2.5rem] shadow-2xl flex items-center justify-center p-6">
-            <Logo className="w-full h-full" />
+          <div className="w-64 h-64 flex items-center justify-center p-4">
+            <Logo className="w-full h-full" variant="png" />
           </div>
-          <div className="text-center space-y-2">
-            <h1 className="text-4xl font-black text-white tracking-tighter">CHEMODOSE</h1>
-            <p className="text-brand-red font-bold tracking-[0.3em] text-xs uppercase opacity-90">Precision Oncology</p>
+          <div className="text-center space-y-4">
+            <div className="space-y-1">
+              <h1 className="text-5xl font-black text-brand-blue tracking-tighter">CHEMODOSE</h1>
+              <div className="flex items-center justify-center gap-3">
+                <div className="h-px w-8 bg-brand-red/30" />
+                <p className="text-brand-red font-bold tracking-[0.4em] text-[10px] uppercase opacity-90">Precision Oncology</p>
+                <div className="h-px w-8 bg-brand-red/30" />
+              </div>
+            </div>
+            <p className="text-slate-400 text-xs font-medium max-w-[200px] mx-auto leading-relaxed">
+              Clinical Compounding & Dosage Calculator for Oncology Professionals
+            </p>
           </div>
           <div className="mt-12">
-            <div className="w-48 h-1.5 bg-white/10 rounded-full overflow-hidden">
+            <div className="w-48 h-1.5 bg-slate-100 rounded-full overflow-hidden">
               <motion.div 
                 initial={{ x: "-100%" }}
                 animate={{ x: "100%" }}
                 transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                className="w-full h-full bg-brand-red shadow-[0_0_15px_rgba(148,27,30,0.5)]"
+                className="w-full h-full bg-brand-red shadow-[0_0_15px_rgba(148,27,30,0.3)]"
               />
             </div>
           </div>

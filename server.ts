@@ -104,7 +104,7 @@ app.delete("/api/drugs/:id", (req, res) => {
   res.json({ message: "Drug deleted" });
 });
 
-// Seed initial data if empty
+// Seed initial data if empty or update formulas
 const count = db.prepare("SELECT COUNT(*) as count FROM drugs").get() as { count: number };
 if (count.count === 0) {
   const insert = db.prepare(`
@@ -116,6 +116,12 @@ if (count.count === 0) {
     const drug = DEFAULT_DRUGS[i] as any;
     const sortOrder = drug.sort_order !== undefined ? drug.sort_order : i;
     insert.run(drug.id, drug.name, drug.category, drug.description, drug.imageUrl, drug.type, JSON.stringify(drug.fields), JSON.stringify(drug.formulas), sortOrder);
+  }
+} else {
+  // Update formulas for existing drugs to match DEFAULT_DRUGS
+  const updateFormulas = db.prepare("UPDATE drugs SET formulas = ?, fields = ? WHERE id = ?");
+  for (const drug of DEFAULT_DRUGS) {
+    updateFormulas.run(JSON.stringify(drug.formulas), JSON.stringify(drug.fields), drug.id);
   }
 }
 

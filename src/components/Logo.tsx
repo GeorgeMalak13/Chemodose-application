@@ -1,6 +1,27 @@
 import React from 'react';
 
-export const Logo: React.FC<{ className?: string }> = ({ className = "w-12 h-12" }) => {
+export const Logo: React.FC<{ className?: string; variant?: 'svg' | 'png' }> = ({ 
+  className = "w-12 h-12", 
+  variant = 'svg' 
+}) => {
+  if (variant === 'png') {
+    return (
+      <img 
+        src="/logo.png" 
+        alt="Oncology Compounding Pharmacy Logo" 
+        className={`${className} object-contain`}
+        referrerPolicy="no-referrer"
+        onError={(e) => {
+          // Fallback to PNG with uppercase extension if lowercase fails
+          const target = e.target as HTMLImageElement;
+          if (target.src.endsWith('.png')) {
+            target.src = '/logo.PNG';
+          }
+        }}
+      />
+    );
+  }
+
   return (
     <svg 
       viewBox="0 0 841.89 595.28" 
@@ -9,7 +30,6 @@ export const Logo: React.FC<{ className?: string }> = ({ className = "w-12 h-12"
     >
       <g>
         <g>
-          {/* Main Logo Shapes with Brand Colors */}
           <path 
             fill="#941B1E" 
             d="M457.49,416.8c-5.66-12.4-11.45-24.18-16.44-36.28
@@ -79,8 +99,6 @@ export const Logo: React.FC<{ className?: string }> = ({ className = "w-12 h-12"
 			c1.14,0.09,1.67,0.16,2.2,0.16c4.31,0.03,8.62-0.01,12.93,0.1c5.51,0.14,9.04,5.08,7.82,10.42
 			C473.81,576.27,473.65,579.38,473.17,583.03z" 
           />
-          
-          {/* Internal Details with White Backgrounds */}
           <path 
             fill="white" 
             d="M342.04,374.89c18.78,0.5,34.57-15.15,34.5-34.51
@@ -101,8 +119,6 @@ export const Logo: React.FC<{ className?: string }> = ({ className = "w-12 h-12"
             d="M329.7,153.09c7.65,0.29,12.48-6.76,12.18-12.79
 			c-0.34-6.74-5.67-11.76-12.61-11.64c-7.91,0.14-12.21,6.25-12.05,12.71C317.36,147.46,322.58,153.62,329.7,153.09z" 
           />
-          
-          {/* Blue Details inside White Areas */}
           <path 
             fill="#253665" 
             d="M342.04,374.89c-19.56,0.48-34.41-15.71-34.77-33.51c-0.4-19.4,14.88-35.94,35.41-35.56

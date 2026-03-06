@@ -15,11 +15,11 @@ export const DEFAULT_DRUGS: Drug[] = [
     ],
     "formulas": [
       { "label": "BSA", "formula": "((4*weight)+7)/(weight+90)", "unit": "m2" },
-      { "label": "Doxorubicin dose in mgs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2)", "unit": "mg" },
-      { "label": "Doxorubicin dose in mLs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2)*0.5", "unit": "mL" },
-      { "label": "Maximum dilution", "formula": "ceil((((4*weight)+7)/(weight+90)*dose_m2)/0.2)", "unit": "mL" },
-      { "label": "Minimum dilution", "formula": "ceil((((4*weight)+7)/(weight+90)*dose_m2)/1)", "unit": "mL" },
-      { "label": "Zofran max. dose in mLs", "formula": "(weight*0.3)*0.5", "unit": "mL" },
+      { "label": "Doxorubicin dose in mgs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2) * dose_adj", "unit": "mg" },
+      { "label": "Doxorubicin dose in mLs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2) * dose_adj * 0.5", "unit": "mL" },
+      { "label": "Maximum dilution", "formula": "ceil((((4*weight)+7)/(weight+90)*dose_m2) * dose_adj / 0.2)", "unit": "mL" },
+      { "label": "Minimum dilution", "formula": "ceil((((4*weight)+7)/(weight+90)*dose_m2) * dose_adj / 1)", "unit": "mL" },
+      { "label": "Zofran max. dose in mLs", "formula": "min((weight*0.3)*0.5, 4)", "unit": "mL" },
       { "label": "Zofran min. dose in mLs", "formula": "(weight*0.15)*0.5", "unit": "" }
     ],
     "sort_order": 0
@@ -38,11 +38,11 @@ export const DEFAULT_DRUGS: Drug[] = [
     ],
     "formulas": [
       { "label": "BSA", "formula": "((4*weight)+7)/(weight+90)", "unit": "m2" },
-      { "label": "Cytarabine dose in mgs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2)", "unit": "mg" },
-      { "label": "Cytarabine dose in mLs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2)*0.01", "unit": "mL" },
-      { "label": "Maximum dilution", "formula": "ceil((((4*weight)+7)/(weight+90)*dose_m2)/0.1)", "unit": "" },
-      { "label": "Minimum dilution", "formula": "ceil((((4*weight)+7)/(weight+90)*dose_m2)/0.2)", "unit": "" },
-      { "label": "Zofran max. dose in mLs", "formula": "(weight*0.3)*0.5", "unit": "mL" },
+      { "label": "Cytarabine dose in mgs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2) * dose_adj", "unit": "mg" },
+      { "label": "Cytarabine dose in mLs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2) * dose_adj * 0.01", "unit": "mL" },
+      { "label": "Maximum dilution", "formula": "ceil((((4*weight)+7)/(weight+90)*dose_m2) * dose_adj / 0.1)", "unit": "" },
+      { "label": "Minimum dilution", "formula": "ceil((((4*weight)+7)/(weight+90)*dose_m2) * dose_adj / 0.2)", "unit": "" },
+      { "label": "Zofran max. dose in mLs", "formula": "min((weight*0.3)*0.5, 4)", "unit": "mL" },
       { "label": "Zofran min. dose in mLs", "formula": "(weight*0.15)*0.5", "unit": "mL" }
     ],
     "sort_order": 1
@@ -61,15 +61,15 @@ export const DEFAULT_DRUGS: Drug[] = [
     ],
     "formulas": [
       { "label": "BSA", "formula": "((4*weight)+7)/(weight+90)", "unit": "m2" },
-      { "label": "Cytoxan dose in mgs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2)", "unit": "mg" },
-      { "label": "Cytoxan dose in mLs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2)*0.05", "unit": "mL" },
-      { "label": "Maximum dilution", "formula": "ceil((((4*weight)+7)/(weight+90)*dose_m2)/2)", "unit": "mL" },
-      { "label": "Minimum dilution", "formula": "ceil((((4*weight)+7)/(weight+90)*dose_m2)/5)", "unit": "mL" },
-      { "label": "Mesna total dose in mLs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2)/100", "unit": "mL" },
-      { "label": "Mesna/ 2 dose ", "formula": "((((4*weight)+7)/(weight+90)*dose_m2)/100)/2", "unit": "mL" },
-      { "label": "Mesna/ 3 dose ", "formula": "((((4*weight)+7)/(weight+90)*dose_m2)/100)/3", "unit": "mL" },
-      { "label": "Mesna/ 4 dose ", "formula": "((((4*weight)+7)/(weight+90)*dose_m2)/100)/4", "unit": "mL" },
-      { "label": "Mesna/ 5 dose ", "formula": "((((4*weight)+7)/(weight+90)*dose_m2)/100)/5", "unit": "mL" }
+      { "label": "Cytoxan dose in mgs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2) * dose_adj", "unit": "mg" },
+      { "label": "Cytoxan dose in mLs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2) * dose_adj * 0.05", "unit": "mL" },
+      { "label": "Maximum dilution", "formula": "ceil((((4*weight)+7)/(weight+90)*dose_m2) * dose_adj / 2)", "unit": "mL" },
+      { "label": "Minimum dilution", "formula": "ceil((((4*weight)+7)/(weight+90)*dose_m2) * dose_adj / 5)", "unit": "mL" },
+      { "label": "Mesna total dose in mLs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2) * dose_adj / 100", "unit": "mL" },
+      { "label": "Mesna/ 2 dose ", "formula": "((((4*weight)+7)/(weight+90)*dose_m2) * dose_adj / 100)/2", "unit": "mL" },
+      { "label": "Mesna/ 3 dose ", "formula": "((((4*weight)+7)/(weight+90)*dose_m2) * dose_adj / 100)/3", "unit": "mL" },
+      { "label": "Mesna/ 4 dose ", "formula": "((((4*weight)+7)/(weight+90)*dose_m2) * dose_adj / 100)/4", "unit": "mL" },
+      { "label": "Mesna/ 5 dose ", "formula": "((((4*weight)+7)/(weight+90)*dose_m2) * dose_adj / 100)/5", "unit": "mL" }
     ],
     "sort_order": 2
   },
@@ -87,15 +87,15 @@ export const DEFAULT_DRUGS: Drug[] = [
     ],
     "formulas": [
       { "label": "BSA", "formula": "((4*weight)+7)/(weight+90)", "unit": "m2" },
-      { "label": "Ifosfamide dose in mgs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2)", "unit": "mg" },
-      { "label": "Ifosfamide dose in mLs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2)*0.02", "unit": "mL" },
-      { "label": "Maximum dilution", "formula": "ceil((((4*weight)+7)/(weight+90)*dose_m2)/0.6)", "unit": "mL" },
-      { "label": "Minimum dilution", "formula": "ceil((((4*weight)+7)/(weight+90)*dose_m2)/20)", "unit": "mL" },
-      { "label": "Mesna total dose in mLs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2)/100", "unit": "mL" },
-      { "label": "Mesna/ 2 dose ", "formula": "((((4*weight)+7)/(weight+90)*dose_m2)/100)/2", "unit": "mL" },
-      { "label": "Mesna/ 3 dose ", "formula": "((((4*weight)+7)/(weight+90)*dose_m2)/100)/3", "unit": "mL" },
-      { "label": "Mesna/ 4 dose ", "formula": "((((4*weight)+7)/(weight+90)*dose_m2)/100)/4", "unit": "mL" },
-      { "label": "Mesna/ 5 dose ", "formula": "((((4*weight)+7)/(weight+90)*dose_m2)/100)/5", "unit": "mL" }
+      { "label": "Ifosfamide dose in mgs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2) * dose_adj", "unit": "mg" },
+      { "label": "Ifosfamide dose in mLs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2) * dose_adj * 0.02", "unit": "mL" },
+      { "label": "Maximum dilution", "formula": "ceil((((4*weight)+7)/(weight+90)*dose_m2) * dose_adj / 0.6)", "unit": "mL" },
+      { "label": "Minimum dilution", "formula": "ceil((((4*weight)+7)/(weight+90)*dose_m2) * dose_adj / 20)", "unit": "mL" },
+      { "label": "Mesna total dose in mLs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2) * dose_adj / 100", "unit": "mL" },
+      { "label": "Mesna/ 2 dose ", "formula": "((((4*weight)+7)/(weight+90)*dose_m2) * dose_adj / 100)/2", "unit": "mL" },
+      { "label": "Mesna/ 3 dose ", "formula": "((((4*weight)+7)/(weight+90)*dose_m2) * dose_adj / 100)/3", "unit": "mL" },
+      { "label": "Mesna/ 4 dose ", "formula": "((((4*weight)+7)/(weight+90)*dose_m2) * dose_adj / 100)/4", "unit": "mL" },
+      { "label": "Mesna/ 5 dose ", "formula": "((((4*weight)+7)/(weight+90)*dose_m2) * dose_adj / 100)/5", "unit": "mL" }
     ],
     "sort_order": 3
   },
@@ -113,7 +113,7 @@ export const DEFAULT_DRUGS: Drug[] = [
     ],
     "formulas": [
       { "label": "BSA", "formula": "((4*weight)+7)/(weight+90)", "unit": "m2" },
-      { "label": "L-asparaginase dose in  mLs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2)*0.0002", "unit": "mLs" }
+      { "label": "L-asparaginase dose in  mLs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2) * dose_adj * 0.0002", "unit": "mLs" }
     ],
     "sort_order": 4
   },
@@ -131,8 +131,8 @@ export const DEFAULT_DRUGS: Drug[] = [
     ],
     "formulas": [
       { "label": "BSA", "formula": "((4*weight)+7)/(weight+90)", "unit": "m2" },
-      { "label": "Vincristine dose in mgs & mLs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2)", "unit": "mg&mLs" },
-      { "label": "Zofran max. dose in mLs", "formula": "(weight*0.3)*0.5", "unit": "mL" },
+      { "label": "Vincristine dose in mgs & mLs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2) * dose_adj", "unit": "mg&mLs" },
+      { "label": "Zofran max. dose in mLs", "formula": "min((weight*0.3)*0.5, 4)", "unit": "mL" },
       { "label": "Zofran min. dose in mLs", "formula": "(weight*0.15)*0.5", "unit": "mL" }
     ],
     "sort_order": 5
@@ -151,11 +151,11 @@ export const DEFAULT_DRUGS: Drug[] = [
     ],
     "formulas": [
       { "label": "BSA", "formula": "((4*weight)+7)/(weight+90)", "unit": "m2" },
-      { "label": "Etoposide dose in mgs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2)", "unit": "mg" },
-      { "label": "Etoposide dose in mLs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2)*0.05", "unit": "mL" },
-      { "label": "Maximum dilution", "formula": "ceil((((4*weight)+7)/(weight+90)*dose_m2)/0.2)", "unit": "" },
-      { "label": "Minimum dilution", "formula": "ceil((((4*weight)+7)/(weight+90)*dose_m2)/0.4)", "unit": "" },
-      { "label": "Zofran max. dose in mLs", "formula": "(weight*0.3)*0.5", "unit": "mL" },
+      { "label": "Etoposide dose in mgs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2) * dose_adj", "unit": "mg" },
+      { "label": "Etoposide dose in mLs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2) * dose_adj * 0.05", "unit": "mL" },
+      { "label": "Maximum dilution", "formula": "ceil((((4*weight)+7)/(weight+90)*dose_m2) * dose_adj / 0.2)", "unit": "" },
+      { "label": "Minimum dilution", "formula": "ceil((((4*weight)+7)/(weight+90)*dose_m2) * dose_adj / 0.4)", "unit": "" },
+      { "label": "Zofran max. dose in mLs", "formula": "min((weight*0.3)*0.5, 4)", "unit": "mL" },
       { "label": "Zofran min. dose in mLs", "formula": "(weight*0.15)*0.5", "unit": "mL" }
     ],
     "sort_order": 6
@@ -174,11 +174,11 @@ export const DEFAULT_DRUGS: Drug[] = [
     ],
     "formulas": [
       { "label": "BSA", "formula": "((4*weight)+7)/(weight+90)", "unit": "m2" },
-      { "label": "Carboplatin dose in mgs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2)", "unit": "mg" },
-      { "label": "Carboplatin dose in mLs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2)*0.1", "unit": "mL" },
-      { "label": "Maximum dilution", "formula": "ceil((((4*weight)+7)/(weight+90)*dose_m2)/0.5)", "unit": "" },
-      { "label": "Minimum dilution", "formula": "ceil((((4*weight)+7)/(weight+90)*dose_m2)/2)", "unit": "" },
-      { "label": "Zofran max. dose in mLs", "formula": "(weight*0.3)*0.5", "unit": "mL" },
+      { "label": "Carboplatin dose in mgs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2) * dose_adj", "unit": "mg" },
+      { "label": "Carboplatin dose in mLs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2) * dose_adj * 0.1", "unit": "mL" },
+      { "label": "Maximum dilution", "formula": "ceil((((4*weight)+7)/(weight+90)*dose_m2) * dose_adj / 0.5)", "unit": "" },
+      { "label": "Minimum dilution", "formula": "ceil((((4*weight)+7)/(weight+90)*dose_m2) * dose_adj / 2)", "unit": "" },
+      { "label": "Zofran max. dose in mLs", "formula": "min((weight*0.3)*0.5, 4)", "unit": "mL" },
       { "label": "Zofran min. dose in mLs", "formula": "(weight*0.15)*0.5", "unit": "mL" }
     ],
     "sort_order": 7
@@ -197,13 +197,13 @@ export const DEFAULT_DRUGS: Drug[] = [
     ],
     "formulas": [
       { "label": "BSA", "formula": "((4*weight)+7)/(weight+90)", "unit": "m2" },
-      { "label": "Cisplatin dose in mgs & mLs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2)", "unit": "mg & mLs" },
-      { "label": "Maximum dilution", "formula": "ceil((((4*weight)+7)/(weight+90)*dose_m2)/0.5)", "unit": "" },
-      { "label": "Minimum dilution", "formula": "ceil((((4*weight)+7)/(weight+90)*dose_m2)/1)", "unit": "" },
-      { "label": "Zofran max. dose in mLs", "formula": "(weight*0.3)*0.5", "unit": "mL" },
+      { "label": "Cisplatin dose in mgs & mLs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2) * dose_adj", "unit": "mg & mLs" },
+      { "label": "Maximum dilution", "formula": "ceil((((4*weight)+7)/(weight+90)*dose_m2) * dose_adj / 0.5)", "unit": "" },
+      { "label": "Minimum dilution", "formula": "ceil((((4*weight)+7)/(weight+90)*dose_m2) * dose_adj / 1)", "unit": "" },
+      { "label": "Zofran max. dose in mLs", "formula": "min((weight*0.3)*0.5, 4)", "unit": "mL" },
       { "label": "Zofran min. dose in mLs", "formula": "(weight*0.15)*0.5", "unit": "mL" },
-      { "label": "90% Cisplatin dose in mLs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2)*0.9", "unit": "mLs" },
-      { "label": "10% Cisplatin dose in mLs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2)*0.1", "unit": "mLs" }
+      { "label": "90% Cisplatin dose in mLs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2) * dose_adj * 0.9", "unit": "mLs" },
+      { "label": "10% Cisplatin dose in mLs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2) * dose_adj * 0.1", "unit": "mLs" }
     ],
     "sort_order": 8
   },
@@ -221,11 +221,11 @@ export const DEFAULT_DRUGS: Drug[] = [
     ],
     "formulas": [
       { "label": "BSA", "formula": "((4*weight)+7)/(weight+90)", "unit": "m2" },
-      { "label": "Fludarabine dose in mgs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2)", "unit": "mg" },
-      { "label": "Fludarabine dose in mLs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2)*0.04", "unit": "mL" },
-      { "label": "Maximum dilution", "formula": "ceil((((4*weight)+7)/(weight+90)*dose_m2)/0.5)", "unit": "" },
-      { "label": "Minimum dilution", "formula": "ceil((((4*weight)+7)/(weight+90)*dose_m2)/1)", "unit": "" },
-      { "label": "Zofran max. dose in mLs", "formula": "(weight*0.3)*0.5", "unit": "mL" },
+      { "label": "Fludarabine dose in mgs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2) * dose_adj", "unit": "mg" },
+      { "label": "Fludarabine dose in mLs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2) * dose_adj * 0.04", "unit": "mL" },
+      { "label": "Maximum dilution", "formula": "ceil((((4*weight)+7)/(weight+90)*dose_m2) * dose_adj / 0.5)", "unit": "" },
+      { "label": "Minimum dilution", "formula": "ceil((((4*weight)+7)/(weight+90)*dose_m2) * dose_adj / 1)", "unit": "" },
+      { "label": "Zofran max. dose in mLs", "formula": "min((weight*0.3)*0.5, 4)", "unit": "mL" },
       { "label": "Zofran min. dose in mLs", "formula": "(weight*0.15)*0.5", "unit": "mL" }
     ],
     "sort_order": 9
@@ -244,11 +244,11 @@ export const DEFAULT_DRUGS: Drug[] = [
     ],
     "formulas": [
       { "label": "BSA", "formula": "((4*weight)+7)/(weight+90)", "unit": "m2" },
-      { "label": "Irinotecan dose in mgs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2)", "unit": "mg" },
-      { "label": "Irinotecan dose in mLs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2)*0.05", "unit": "mL" },
-      { "label": "Maximum dilution", "formula": "ceil((((4*weight)+7)/(weight+90)*dose_m2)/0.12)", "unit": "" },
-      { "label": "Minimum dilution", "formula": "ceil((((4*weight)+7)/(weight+90)*dose_m2)/2.8)", "unit": "" },
-      { "label": "Zofran max. dose in mLs", "formula": "(weight*0.3)*0.5", "unit": "mL" },
+      { "label": "Irinotecan dose in mgs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2) * dose_adj", "unit": "mg" },
+      { "label": "Irinotecan dose in mLs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2) * dose_adj * 0.05", "unit": "mL" },
+      { "label": "Maximum dilution", "formula": "ceil((((4*weight)+7)/(weight+90)*dose_m2) * dose_adj / 0.12)", "unit": "" },
+      { "label": "Minimum dilution", "formula": "ceil((((4*weight)+7)/(weight+90)*dose_m2) * dose_adj / 2.8)", "unit": "" },
+      { "label": "Zofran max. dose in mLs", "formula": "min((weight*0.3)*0.5, 4)", "unit": "mL" },
       { "label": "Zofran min. dose in mLs", "formula": "(weight*0.15)*0.5", "unit": "mL" }
     ],
     "sort_order": 10
@@ -267,10 +267,10 @@ export const DEFAULT_DRUGS: Drug[] = [
     ],
     "formulas": [
       { "label": "BSA", "formula": "((4*weight)+7)/(weight+90)", "unit": "m2" },
-      { "label": "Topotecan dose in mgs & mLs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2)", "unit": "mg & mLs" },
-      { "label": "Maximum dilution", "formula": "ceil((((4*weight)+7)/(weight+90)*dose_m2)/0.025)", "unit": "" },
-      { "label": "Minimum dilution", "formula": "ceil((((4*weight)+7)/(weight+90)*dose_m2)/0.5)", "unit": "" },
-      { "label": "Zofran max. dose in mLs", "formula": "(weight*0.3)*0.5", "unit": "mL" },
+      { "label": "Topotecan dose in mgs & mLs", "formula": "(((4*weight)+7)/(weight+90)*dose_m2) * dose_adj", "unit": "mg & mLs" },
+      { "label": "Maximum dilution", "formula": "ceil((((4*weight)+7)/(weight+90)*dose_m2) * dose_adj / 0.025)", "unit": "" },
+      { "label": "Minimum dilution", "formula": "ceil((((4*weight)+7)/(weight+90)*dose_m2) * dose_adj / 0.5)", "unit": "" },
+      { "label": "Zofran max. dose in mLs", "formula": "min((weight*0.3)*0.5, 4)", "unit": "mL" },
       { "label": "Zofran min. dose in mLs", "formula": "(weight*0.15)*0.5", "unit": "mL" }
     ],
     "sort_order": 11
